@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  @apply text-base-800;
+}
+
+html,
+body,
+#__next {
+  @apply w-full h-full;
+}
