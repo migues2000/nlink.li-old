@@ -1,10 +1,16 @@
 import type { NextPage } from 'next';
+import { default as PageLayout } from '@components/layout/PageLayout';
+import { default as LinkInput } from '@components/LinkInput';
+import { default as ShortenerOptions } from '@components/ShortenerOptions';
 
 const HomePage: NextPage = () => {
   return (
-    <div className='flex items-center justify-center w-full h-full'>
-      <h1 className='text-4xl font-bold text-primary-500'>Link Shortener</h1>
-    </div>
+    <PageLayout title='Link Shortener'>
+      <div className='flex flex-col items-center justify-center p-4 space-y-4 w-96'>
+        <LinkInput />
+        <ShortenerOptions />
+      </div>
+    </PageLayout>
   );
 };
 
