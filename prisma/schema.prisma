@@ -10,7 +10,7 @@ datasource db {
 model ShortenedLink {
   id           String   @id
   link         String
-  password     String
-  isSensitive  String
+  password     String?
+  isSensitive  Boolean  @default(false)
   shortened_at DateTime @default(now())
 }

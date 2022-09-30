@@ -10,6 +10,7 @@ type ShortenerContextProps = {
   markAsSensitive: () => void;
   unmarkAsSensitive: () => void;
   setLink: (link: string | undefined) => void;
+  shorten: () => Promise<string>;
 };
 
 export const ShortenerContext = createContext<ShortenerContextProps>(
@@ -34,6 +35,17 @@ export const ShortenerContextProvider = ({
   const markAsSensitive = () => setIsSensitive(true);
   const unmarkAsSensitive = () => setIsSensitive(false);
 
+  const shorten = async () => {
+    const result = await fetch('/api/shorten', {
+      method: 'POST',
+      body: JSON.stringify({ link, password, isSensitive }),
+    });
+
+    if (result.status !== 201) throw new Error('Something went wrong');
+
+    return await result.text();
+  };
+
   return (
     <ShortenerContext.Provider
       value={{
@@ -45,6 +57,7 @@ export const ShortenerContextProvider = ({
         markAsSensitive,
         unmarkAsSensitive,
         setLink,
+        shorten,
       }}
     >
       {children}
