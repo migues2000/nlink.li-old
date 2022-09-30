@@ -1,6 +1,8 @@
 import { LinkIcon } from '@heroicons/react/20/solid';
+import { default as useShortener } from '@hooks/useShortener';
 
 const LinkInput = () => {
+  const { setLink } = useShortener();
   return (
     <div className='relative w-full'>
       <div className='absolute top-0 bottom-0 w-5 h-5 my-auto left-3'>
@@ -8,6 +10,9 @@ const LinkInput = () => {
       </div>
       <input
         type='url'
+        onChange={(event) =>
+          setLink(event.target.value !== '' ? event.target.value : undefined)
+        }
         className='w-full py-2 pl-10 pr-2 transition-colors border rounded-lg shadow-xl bg-base-50 border-base-200 shadow-base-100 focus:outline-none focus:border-primary-300'
       />
     </div>
