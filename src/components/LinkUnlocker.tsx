@@ -18,7 +18,8 @@ const LinkUnlocker = ({ id }: LinkUnlockerProps) => {
       method: 'POST',
       body: JSON.stringify({ id, password }),
     });
-    if (result.status !== 200) return toast.error('Invalid Password');
+    if (result.status !== 200)
+      return setIsLoading(false), toast.error('Invalid Password');
 
     toast.loading('Redirecting...');
     router.push(await result.text());
