@@ -9,7 +9,7 @@ const handler: NextApiHandler = async (req, res) => {
 
   try {
     const shortenedLink = await prisma.shortenedLink.create({
-      data: { ...input, id: nanoid(5) },
+      data: { ...input, id: nanoid(4) },
     });
     return res.status(201).send(`${process.env.DOMAIN}/${shortenedLink.id}`);
   } catch (error) {
