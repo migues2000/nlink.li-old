@@ -7,8 +7,3 @@ body,
 #__next {
   @apply w-full h-full;
 }
-
-body {
-  background-image: url(https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg);
-  @apply bg-center;
-}
