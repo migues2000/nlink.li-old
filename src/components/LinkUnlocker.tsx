@@ -3,6 +3,8 @@ import { LockClosedIcon } from '@heroicons/react/24/outline';
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
 import { useRouter } from 'next/router';
 import { default as toast } from 'react-hot-toast';
+import { default as Image } from 'next/image';
+import { default as LockIllustration } from '../assets/lock.svg';
 
 type LinkUnlockerProps = { id: string };
 
@@ -26,12 +28,19 @@ const LinkUnlocker = ({ id }: LinkUnlockerProps) => {
   };
 
   return (
-    <div className='flex flex-col items-center justify-center -mt-16 space-y-6'>
-      <LockClosedIcon className='text-primary-300 w-28 h-28' />
-      <div className='px-6 leading-8 text-center'>
+    <div className='flex flex-col items-center justify-center -mt-16'>
+      <Image
+        src={LockIllustration}
+        width={400}
+        height={250}
+        objectFit='contain'
+        objectPosition='center'
+        className='w-80 h-80'
+      />
+      <div className='px-6 text-center'>
         <p>This link is protected by a password.</p>
       </div>
-      <div className='px-6'>
+      <div className='px-6 mt-6'>
         <div className='relative w-full'>
           <div className='absolute top-0 bottom-0 w-5 h-5 my-auto left-3'>
             <LockClosedIcon className='w-5 h-5 text-base-500' />
@@ -46,7 +55,7 @@ const LinkUnlocker = ({ id }: LinkUnlockerProps) => {
       </div>
       <button
         onClick={handleUnlock}
-        className='inline-flex justify-center px-4 py-2 text-sm font-medium uppercase transition-colors border border-transparent rounded-md text-primary-900 bg-primary-100 disabled:cursor-not-allowed sabled:text-base-300 disabled:bg-transparent disabled:text-base-300 disabled:hover:bg-transparent group hover:bg-primary-200 focus:outline-none'
+        className='inline-flex justify-center px-4 py-2 mt-6 text-sm font-medium uppercase transition-colors border border-transparent rounded-md text-primary-900 bg-primary-100 disabled:cursor-not-allowed sabled:text-base-300 disabled:bg-transparent disabled:text-base-300 disabled:hover:bg-transparent group hover:bg-primary-200 focus:outline-none'
       >
         Continue
         {!isLoading ? (
