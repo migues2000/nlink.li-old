@@ -1,7 +1,13 @@
 const PageHeader = () => {
   return (
-    <header className='flex items-center justify-center w-full p-6'>
-      <h1 className='text-3xl font-bold text-primary-500'>Nano Link</h1>
+    <header className='navbar'>
+      <div className='navbar-start'></div>
+      <div className='navbar-center'>
+        <a className='text-3xl font-bold normal-case text-primary btn btn-ghost'>
+          Nano Link
+        </a>
+      </div>
+      <div className='navbar-end'></div>
     </header>
   );
 };

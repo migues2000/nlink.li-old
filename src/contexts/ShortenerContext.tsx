@@ -43,6 +43,7 @@ export const ShortenerContextProvider = ({
 
     if (result.status !== 201) throw new Error('Something went wrong');
 
+    setLink(undefined);
     return await result.text();
   };
 

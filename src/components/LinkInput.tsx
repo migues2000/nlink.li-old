@@ -2,14 +2,22 @@ import { LinkIcon } from '@heroicons/react/20/solid';
 import { default as useShortener } from '@hooks/useShortener';
 import { ChangeEventHandler, useState } from 'react';
 
-const LinkInput = () => {
+type LinkInputProps = { disabled: boolean };
+
+const LinkInput = ({ disabled }: LinkInputProps) => {
   const { setLink } = useShortener();
   const [isValid, setIsValid] = useState<boolean>();
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     event.target.value !== ''
       ? isValidLink(event.target.value)
-        ? (setLink(event.target.value), setIsValid(true))
+        ? (setLink(
+            event.target.value.startsWith('http://') ||
+              event.target.value.startsWith('https://')
+              ? event.target.value
+              : `https://${event.target.value}`
+          ),
+          setIsValid(true))
         : (setLink(undefined), setIsValid(false))
       : setIsValid(undefined);
   };
@@ -28,11 +36,12 @@ const LinkInput = () => {
   };
 
   return (
-    <div className='relative w-full'>
-      <div className='absolute top-0 bottom-0 w-5 h-5 my-auto left-3'>
+    <div className='relative w-full form-control'>
+      <div className='absolute top-0 bottom-0 w-5 h-5 my-auto left-4'>
         <LinkIcon className='w-5 h-5 text-base-500' />
       </div>
       <input
+        disabled={disabled}
         type='url'
         onChange={handleChange}
         className={
@@ -45,13 +54,12 @@ const LinkInput = () => {
   );
 };
 
-const inputCommonStyles =
-  'w-full py-2 pl-10 pr-2 transition-colors border rounded-lg shadow-xl bg-base-50 border-base-200 shadow-base-100 focus:outline-none';
+const inputCommonStyles = 'w-full input input-bordered pl-11';
 
 const inputStyles = {
-  neutral: `focus:border-primary-300 ${inputCommonStyles}`,
-  valid: `border-green-500 ${inputCommonStyles}`,
-  invalid: `border-red-500 ${inputCommonStyles}`,
+  neutral: `${inputCommonStyles}`,
+  valid: `input-success ${inputCommonStyles}`,
+  invalid: `input-error ${inputCommonStyles}`,
 };
 
 export default LinkInput;

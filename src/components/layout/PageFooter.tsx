@@ -2,8 +2,8 @@ import { HeartIcon } from '@heroicons/react/24/outline';
 
 const PageFooter = () => {
   return (
-    <footer className='flex flex-col items-center justify-center w-full p-4 space-y-2'>
-      <p className='flex items-center space-x-2 leading-none'>
+    <footer className='gap-2 p-4 footer footer-center'>
+      <p className='flex items-center leading-none'>
         <span>Made with</span>
         <HeartIcon className='w-5 h-5 text-red-500' />
         <span>by</span>
@@ -16,7 +16,7 @@ const PageFooter = () => {
           @migues2000
         </a>
       </p>
-      <p>
+      <p className='flex items-center leading-none'>
         Illustrations by{' '}
         <a
           rel='noreferrer'
