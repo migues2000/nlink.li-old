@@ -34,7 +34,8 @@ const ShortenerOptions = ({ disabled }: ShortenerOptionsProps) => {
           <label
             htmlFor='add-password-modal'
             className={
-              link
+              link !== undefined &&
+              (disabled === undefined || disabled === false)
                 ? 'btn btn-ghost btn-sm modal-button'
                 : 'btn btn-ghost btn-sm modal-button btn-disabled'
             }
