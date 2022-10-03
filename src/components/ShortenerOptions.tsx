@@ -20,7 +20,7 @@ const ShortenerOptions = ({ disabled }: ShortenerOptionsProps) => {
 
   return (
     <>
-      <div className='flex flex-col items-center justify-center w-full space-x-2 md:flex-row'>
+      <div className='flex flex-col items-center justify-center w-full space-x-0 space-y-2 md:space-y-0 md:space-x-2 md:flex-row'>
         {password ? (
           <button
             disabled={!link || disabled}
