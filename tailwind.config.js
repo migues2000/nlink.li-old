@@ -1,3 +1,5 @@
+const colors = require('tailwindcss/colors');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['src/pages/**/*.tsx', 'src/components/**/*.tsx'],
@@ -6,6 +8,6 @@ module.exports = {
   },
   plugins: [require('daisyui')],
   daisyui: {
-    themes: ['light'],
+    themes: ['corporate'],
   },
 };

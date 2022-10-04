@@ -23,7 +23,7 @@ const Shortener = () => {
   return (
     <>
       {status === 'idle' || status === 'loading' ? (
-        <div className='flex flex-col items-center justify-center p-4 space-y-4 w-96'>
+        <div className='flex flex-col items-center justify-center p-4 space-y-2 w-96'>
           <LinkInput disabled={status === 'loading'} />
           <ShortenerOptions disabled={status === 'loading'} />
           <button

@@ -23,9 +23,12 @@ const ShortenerOptions = ({ disabled }: ShortenerOptionsProps) => {
       <div className='flex flex-col items-center justify-center w-full space-x-0 space-y-2 md:space-y-0 md:space-x-2 md:flex-row'>
         {password ? (
           <button
-            disabled={!link || disabled}
             onClick={() => (password ? removePassword() : null)}
-            className={'btn btn-ghost btn-sm'}
+            className={
+              !link || disabled
+                ? 'btn btn-ghost btn-sm btn-disabled bg-transparent'
+                : 'btn btn-ghost btn-sm'
+            }
           >
             <LockOpenIcon className='w-5 h-5 mr-2' />
             Remove password
@@ -37,7 +40,7 @@ const ShortenerOptions = ({ disabled }: ShortenerOptionsProps) => {
               link !== undefined &&
               (disabled === undefined || disabled === false)
                 ? 'btn btn-ghost btn-sm modal-button'
-                : 'btn btn-ghost btn-sm modal-button btn-disabled'
+                : 'btn btn-ghost btn-sm modal-button btn-disabled bg-transparent'
             }
           >
             <LockClosedIcon className='w-5 h-5 mr-2' />
@@ -45,11 +48,14 @@ const ShortenerOptions = ({ disabled }: ShortenerOptionsProps) => {
           </label>
         )}
         <button
-          disabled={!link || disabled}
           onClick={() =>
             isSensitive ? unmarkAsSensitive() : markAsSensitive()
           }
-          className='btn btn-ghost btn-sm modal-button'
+          className={
+            !link || disabled
+              ? 'btn btn-ghost btn-sm modal-button btn-disabled bg-transparent'
+              : 'btn btn-ghost btn-sm modal-button'
+          }
         >
           {isSensitive ? (
             <>

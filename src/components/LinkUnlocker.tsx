@@ -57,6 +57,7 @@ const LinkUnlocker = ({ id }: LinkUnlockerProps) => {
         </div>
       </div>
       <button
+        disabled={password.length === 0}
         onClick={handleUnlock}
         className={
           isLoading
