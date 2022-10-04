@@ -31,8 +31,8 @@ const Shortener = () => {
             onClick={handleClick}
             className={
               status === 'loading'
-                ? 'btn btn-primary loading'
-                : 'btn btn-primary'
+                ? 'btn btn-primary btn-wide loading'
+                : 'btn btn-primary btn-wide'
             }
           >
             Shorten

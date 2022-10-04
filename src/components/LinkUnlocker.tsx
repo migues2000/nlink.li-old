@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react';
 import { LockClosedIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/router';
 import { default as toast } from 'react-hot-toast';
-import { default as Image } from 'next/image';
-import { default as LockIllustration } from '../assets/lock.svg';
 
 type LinkUnlockerProps = { id: string };
 
@@ -36,15 +34,8 @@ const LinkUnlocker = ({ id }: LinkUnlockerProps) => {
 
   return (
     <div className='flex flex-col items-center justify-center -mt-16'>
-      <Image
-        src={LockIllustration}
-        width={400}
-        height={250}
-        objectFit='contain'
-        objectPosition='center'
-        className='w-80 h-80'
-      />
-      <div className='px-6 text-center'>
+      <LockClosedIcon className='w-32 h-32 text-primary' />
+      <div className='px-6 leading-8 text-center'>
         <p>This link is protected by a password.</p>
       </div>
       <div className='px-6 mt-6'>

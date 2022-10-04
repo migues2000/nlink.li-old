@@ -1,5 +1,4 @@
-import { default as Image } from 'next/image';
-import { default as WarningIllustration } from '../assets/warning.svg';
+import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 
 type SensitiveContentWarningProps = { onConcern: () => void };
 
@@ -8,14 +7,7 @@ const SensitiveContentWarning = ({
 }: SensitiveContentWarningProps) => {
   return (
     <div className='flex flex-col items-center justify-center -mt-16'>
-      <Image
-        src={WarningIllustration}
-        width={300}
-        height={280}
-        objectFit='contain'
-        objectPosition='center'
-        className='w-80 h-80'
-      />
+      <ExclamationTriangleIcon className='w-32 h-32 text-warning' />
       <div className='px-6 leading-8 text-center'>
         <p>
           The following content has been marked as <strong>sensitive</strong>.
@@ -25,7 +17,7 @@ const SensitiveContentWarning = ({
           <strong>drugs</strong>, <strong>nudity</strong>, etc.
         </p>
       </div>
-      <button onClick={onConcern} className='mt-6 btn btn-error btn-outline'>
+      <button onClick={onConcern} className='mt-6 btn btn-warning btn-outline'>
         Continue anyways
       </button>
     </div>
