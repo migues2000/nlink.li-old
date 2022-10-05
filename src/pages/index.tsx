@@ -8,7 +8,6 @@ const HomePage: NextPage = () => {
   return (
     <PageLayout title='Link Shortener'>
       <ShortenerContextProvider>
-        <PasswordDialog />
         <Shortener />
       </ShortenerContextProvider>
     </PageLayout>

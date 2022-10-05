@@ -1,14 +1,20 @@
+import { Grid, GridItem, Heading } from '@chakra-ui/react';
+
 const PageHeader = () => {
   return (
-    <header className='navbar'>
-      <div className='navbar-start'></div>
-      <div className='navbar-center'>
-        <a className='text-3xl font-bold normal-case text-primary btn btn-ghost'>
-          Nano Link
-        </a>
-      </div>
-      <div className='navbar-end'></div>
-    </header>
+    <Grid
+      as='header'
+      width='100%'
+      gridTemplateColumns='1fr 2fr 1fr'
+      gap='6'
+      padding='4'
+    >
+      <GridItem width='100%'></GridItem>
+      <GridItem width='100%' textAlign='center'>
+        <Heading>Nano Link</Heading>
+      </GridItem>
+      <GridItem width='100%'></GridItem>
+    </Grid>
   );
 };
 

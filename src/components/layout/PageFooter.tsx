@@ -1,22 +1,23 @@
-import { HeartIcon } from '@heroicons/react/24/outline';
+import { Grid, GridItem, Link, Text } from '@chakra-ui/react';
 
 const PageFooter = () => {
   return (
-    <footer className='gap-2 p-4 footer footer-center'>
-      <p className='flex items-center gap-1 leading-none'>
-        <span>Made with</span>
-        <HeartIcon className='w-5 h-5 text-red-500' />
-        <span>by</span>
-        <a
-          rel='noreferrer'
-          target='_blank'
-          href='https://github.com/migues2000'
-          className='text-blue-500'
-        >
-          @migues2000
-        </a>
-      </p>
-    </footer>
+    <Grid as='footer' width='100%' gap='6' padding='4'>
+      <GridItem width='100%' textAlign='center'>
+        <Text>
+          Made with &hearts; by{' '}
+          <Link
+            color='teal.500'
+            rel='noreferrer'
+            target='_blank'
+            href='https://github.com/migues2000'
+            isExternal
+          >
+            @migues2000
+          </Link>
+        </Text>
+      </GridItem>
+    </Grid>
   );
 };
 

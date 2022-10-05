@@ -1,6 +1,14 @@
-import { LinkIcon } from '@heroicons/react/20/solid';
 import { default as useShortener } from '@hooks/useShortener';
 import { ChangeEventHandler, useState } from 'react';
+import {
+  Icon,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  InputRightElement,
+} from '@chakra-ui/react';
+import ShortenerOptions from './ShortenerOptions';
+import { MdLink } from 'react-icons/md';
 
 type LinkInputProps = { disabled: boolean };
 
@@ -36,30 +44,23 @@ const LinkInput = ({ disabled }: LinkInputProps) => {
   };
 
   return (
-    <div className='relative w-full form-control'>
-      <div className='absolute top-0 bottom-0 w-5 h-5 my-auto left-4'>
-        <LinkIcon className='w-5 h-5 text-base-500' />
-      </div>
-      <input
-        disabled={disabled}
+    <InputGroup>
+      <InputLeftElement pointerEvents='none'>
+        <Icon color='gray.400' width='5' height='5' as={MdLink} />
+      </InputLeftElement>
+      <Input
         type='url'
         onChange={handleChange}
-        className={
-          inputStyles[
-            isValid === undefined ? 'neutral' : isValid ? 'valid' : 'invalid'
-          ]
-        }
+        disabled={disabled}
+        isInvalid={isValid === false}
       />
-    </div>
+      {isValid && (
+        <InputRightElement>
+          <ShortenerOptions />
+        </InputRightElement>
+      )}
+    </InputGroup>
   );
-};
-
-const inputCommonStyles = 'w-full input input-bordered pl-11';
-
-const inputStyles = {
-  neutral: `${inputCommonStyles}`,
-  valid: `input-success ${inputCommonStyles}`,
-  invalid: `input-error ${inputCommonStyles}`,
 };
 
 export default LinkInput;

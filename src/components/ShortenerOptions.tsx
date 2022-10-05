@@ -1,16 +1,27 @@
 import {
-  EyeIcon,
-  EyeSlashIcon,
-  LockClosedIcon,
-  LockOpenIcon,
-} from '@heroicons/react/24/outline';
+  Center,
+  Icon,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  useDisclosure,
+} from '@chakra-ui/react';
 import { default as useShortener } from '@hooks/useShortener';
+import { useRef } from 'react';
+import { default as PasswordDialog } from './PasswordDialog';
+import {
+  MdDisabledVisible,
+  MdLock,
+  MdLockOpen,
+  MdMoreVert,
+  MdRemoveRedEye,
+} from 'react-icons/md';
 
-type ShortenerOptionsProps = { disabled?: boolean };
-
-const ShortenerOptions = ({ disabled }: ShortenerOptionsProps) => {
+const ShortenerOptions = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = useRef<any>();
   const {
-    link,
     isSensitive,
     markAsSensitive,
     unmarkAsSensitive,
@@ -20,56 +31,56 @@ const ShortenerOptions = ({ disabled }: ShortenerOptionsProps) => {
 
   return (
     <>
-      <div className='flex flex-col items-center justify-center w-full space-x-0 space-y-2 md:space-y-0 md:space-x-2 md:flex-row'>
-        {password ? (
-          <button
-            onClick={() => (password ? removePassword() : null)}
-            className={
-              !link || disabled
-                ? 'btn btn-ghost btn-sm btn-disabled bg-transparent'
-                : 'btn btn-ghost btn-sm'
+      <PasswordDialog isOpen={isOpen} onClose={onClose} cancelRef={cancelRef} />
+      <Menu isLazy>
+        <MenuButton>
+          <Icon
+            as={MdMoreVert}
+            marginTop='1.5'
+            width='5'
+            height='5'
+            color='gray.400'
+          />
+        </MenuButton>
+        <MenuList>
+          <MenuItem
+            icon={
+              password ? (
+                <Icon as={MdLockOpen} width='4' height='4' color='gray.500' />
+              ) : (
+                <Icon as={MdLock} width='4' height='4' color='gray.500' />
+              )
+            }
+            onClick={password ? removePassword : onOpen}
+          >
+            {password ? 'Remove password' : 'Add password'}
+          </MenuItem>
+          <MenuItem
+            icon={
+              isSensitive ? (
+                <Icon
+                  as={MdRemoveRedEye}
+                  width='4'
+                  height='4'
+                  color='gray.500'
+                />
+              ) : (
+                <Icon
+                  as={MdDisabledVisible}
+                  width='4'
+                  height='4'
+                  color='gray.500'
+                />
+              )
+            }
+            onClick={() =>
+              isSensitive ? unmarkAsSensitive() : markAsSensitive()
             }
           >
-            <LockOpenIcon className='w-5 h-5 mr-2' />
-            Remove password
-          </button>
-        ) : (
-          <label
-            htmlFor='add-password-modal'
-            className={
-              link !== undefined &&
-              (disabled === undefined || disabled === false)
-                ? 'btn btn-ghost btn-sm modal-button'
-                : 'btn btn-ghost btn-sm modal-button btn-disabled bg-transparent'
-            }
-          >
-            <LockClosedIcon className='w-5 h-5 mr-2' />
-            Add password
-          </label>
-        )}
-        <button
-          onClick={() =>
-            isSensitive ? unmarkAsSensitive() : markAsSensitive()
-          }
-          className={
-            !link || disabled
-              ? 'btn btn-ghost btn-sm modal-button btn-disabled bg-transparent'
-              : 'btn btn-ghost btn-sm modal-button'
-          }
-        >
-          {isSensitive ? (
-            <>
-              <EyeIcon className='w-5 h-5 mr-2' />
-              Unmark as sensitive
-            </>
-          ) : (
-            <>
-              <EyeSlashIcon className='w-5 h-5 mr-2' />
-              Mark as sensitive
-            </>
-          )}
-        </button>
-      </div>
+            {isSensitive ? 'Unmark as sensitive' : 'Mark as sensitive'}
+          </MenuItem>
+        </MenuList>
+      </Menu>
     </>
   );
 };
