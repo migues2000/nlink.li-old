@@ -38,7 +38,7 @@ const useShortener = create<ShortenerState>()(
 
           if (result.status !== 201) throw new Error('Something went wrong');
 
-          set({ link: undefined });
+          set({ link: undefined, password: undefined, isSensitive: false });
           return await result.text();
         },
       }),
