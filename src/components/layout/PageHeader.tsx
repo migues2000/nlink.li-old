@@ -20,7 +20,7 @@ import {
 import { useUser } from '@auth0/nextjs-auth0';
 
 const PageHeader = () => {
-  const { user } = useUser();
+  const { user, isLoading } = useUser();
 
   return (
     <SimpleGrid as='header' width='100%' columns={[4, 6]} gap='6' padding='4'>
@@ -71,17 +71,15 @@ const PageHeader = () => {
             </MenuList>
           </Menu>
         ) : (
-          <>
-            <Button
-              colorScheme='teal'
-              mr='2'
-              as='a'
-              href='/api/auth/login'
-              leftIcon={<Icon as={MdPerson} w='4' h='4' />}
-            >
-              Log in
-            </Button>
-          </>
+          <Button
+            colorScheme='teal'
+            as='a'
+            href='/api/auth/login'
+            leftIcon={<Icon as={MdPerson} />}
+            isLoading={isLoading}
+          >
+            Log in
+          </Button>
         )}
       </GridItem>
     </SimpleGrid>
