@@ -13,17 +13,38 @@ type ShortenerState = {
   reset: () => void;
 };
 
-const useShortener = create<ShortenerState>()((set, get) => ({
-  link: undefined,
-  password: undefined,
-  isSensitive: false,
-  addPassword: (password) => set({ password: hashSync(password, 12) }),
-  removePassword: () => set({ password: undefined }),
-  markAsSensitive: () => set({ isSensitive: true }),
-  unmarkAsSensitive: () => set({ isSensitive: false }),
-  setLink: (link) => set({ link }),
-  reset: () => {
-    set({ link: undefined, password: undefined, isSensitive: false });
-  },
-}));
+const useShortener = create<ShortenerState>()(
+  devtools(
+    persist(
+      (set, get) => ({
+        link: undefined,
+        password: undefined,
+        isSensitive: false,
+        addPassword: (password) => set({ password: hashSync(password, 12) }),
+        removePassword: () => set({ password: undefined }),
+        markAsSensitive: () => set({ isSensitive: true }),
+        unmarkAsSensitive: () => set({ isSensitive: false }),
+        setLink: (link) => set({ link }),
+        shorten: async () => {
+          const result = await fetch('/api/shorten', {
+            method: 'POST',
+            body: JSON.stringify({
+              link: get().link,
+              password: get().password,
+              isSensitive: get().isSensitive,
+            }),
+          });
+
+          if (result.status !== 201) throw new Error('Something went wrong');
+
+          set({ link: undefined });
+          return await result.text();
+        },
+      }),
+      {
+        name: 'shortener-storage',
+      }
+    )
+  )
+);
 export default useShortener;
