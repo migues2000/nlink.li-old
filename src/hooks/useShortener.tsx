@@ -1,4 +1,5 @@
 import { default as create } from 'zustand';
+import { devtools, persist } from 'zustand/middleware';
 import { hashSync } from 'bcryptjs';
 
 type ShortenerState = {
@@ -10,7 +11,6 @@ type ShortenerState = {
   markAsSensitive: () => void;
   unmarkAsSensitive: () => void;
   setLink: (link: string | undefined) => void;
-  reset: () => void;
 };
 
 const useShortener = create<ShortenerState>()(
