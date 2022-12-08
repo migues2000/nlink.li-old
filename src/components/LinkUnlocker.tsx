@@ -11,6 +11,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { MdOutlineLock } from 'react-icons/md';
+import { unlock } from '@helpers/client/unlocker';
 
 type LinkUnlockerProps = { id: string };
 
@@ -29,20 +30,20 @@ const LinkUnlocker = ({ id }: LinkUnlockerProps) => {
 
   const handleUnlock = async () => {
     setIsLoading(true);
-    const result = await fetch('/api/verify-password', {
-      method: 'POST',
-      body: JSON.stringify({ id, password }),
-    });
-    if (result.status !== 200)
-      return (
-        setIsValid(false),
-        setIsLoading(false),
-        toast({ title: 'Invalid Password', status: 'error' })
-      );
-
-    setIsValid(true);
-    toast({ title: 'Redirecting...', status: 'loading' });
-    router.push(await result.text());
+    unlock(
+      id,
+      password,
+      () => {
+        setIsValid(false);
+        setIsLoading(false);
+        toast({ title: 'Invalid Password', status: 'error' });
+      },
+      (link) => {
+        setIsValid(true);
+        toast({ title: 'Redirecting...', status: 'loading' });
+        router.push(link);
+      }
+    );
   };
 
   return (

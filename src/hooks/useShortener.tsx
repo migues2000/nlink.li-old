@@ -11,7 +11,7 @@ type ShortenerState = {
   markAsSensitive: () => void;
   unmarkAsSensitive: () => void;
   setLink: (link: string | undefined) => void;
-  shorten: () => Promise<string>;
+  reset: () => void;
 };
 
 const useShortener = create<ShortenerState>()(
@@ -40,6 +40,9 @@ const useShortener = create<ShortenerState>()(
 
           set({ link: undefined });
           return await result.text();
+        },
+        reset: () => {
+          set({ link: undefined, password: undefined, isSensitive: false });
         },
       }),
       {
