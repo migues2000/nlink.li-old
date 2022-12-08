@@ -1,28 +1,37 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
-import { createRouter } from 'next-connect';
-import { getSession } from '@auth0/nextjs-auth0';
-import { shorten } from '@helpers/server/shortener';
+import type { NextApiHandler } from 'next';
+import { default as prisma } from '@lib/prisma';
+import { nanoid } from 'nanoid';
+import { scheduleJob } from 'node-schedule';
 
-const router = createRouter<NextApiRequest, NextApiResponse>();
+const handler: NextApiHandler = async (req, res) => {
+  if (req.method !== 'POST') return res.status(404).end();
 
-router.post('/api/shorten', async (req, res) => {
+  const input = JSON.parse(req.body);
+
   try {
-    const session = getSession(req, res);
-    const input = JSON.parse(req.body);
-
-    const shortenedLink = await shorten(input, session?.user.sub);
-
-    return res.status(201).send(shortenedLink);
+    const shortenedLink = await prisma.shortenedLink.create({
+      data: { ...input, id: nanoid(4) },
+    });
+    scheduleJob(
+      new Date(
+        shortenedLink.shortened_at.getTime() +
+          Number(process.env.NEXT_PUBLIC_SHORTENED_LINK_EXPIRATION_TIME)
+      ),
+      async () => {
+        try {
+          await prisma.shortenedLink.delete({
+            where: { id: shortenedLink.id },
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    );
+    return res.status(201).send(`${process.env.DOMAIN}/${shortenedLink.id}`);
   } catch (error) {
-    throw error;
+    console.log(error);
+    return res.status(500).end();
   }
-});
+};
 
-export default router.handler({
-  onError: (err, req, res) => {
-    res.status(500).end();
-  },
-  onNoMatch: (req, res) => {
-    res.status(404).end();
-  },
-});
+export default handler;

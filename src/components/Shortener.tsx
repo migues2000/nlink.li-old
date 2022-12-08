@@ -10,38 +10,28 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { CopyIcon } from '@chakra-ui/icons';
-import { shorten } from '@helpers/client/shortener';
 
 const Shortener = () => {
   const [status, setStatus] = useState<'idle' | 'loading' | 'done'>('idle');
   const [result, setResult] = useState<string>();
-  const { link, password, isSensitive, reset } = useShortener();
+  const { link, shorten } = useShortener();
 
   const toast = useToast();
 
   const handleClick = async () => {
     setStatus('loading');
-    link
-      ? await shorten(
-          link,
-          () => {
-            setStatus('idle');
-            toast({ title: 'Something went wrong', status: 'error' });
-          },
-          (shortenedLink) => {
-            reset();
-            toast({ title: 'Succesufully shortened', status: 'success' });
-            setStatus('done');
-            setResult(shortenedLink);
-          },
-          password,
-          isSensitive
+    await shorten()
+      .then((result) => {
+        toast({ title: 'Succesufully shortened', status: 'success' });
+        setStatus('done');
+        setResult(result);
+      })
+      .catch(
+        () => (
+          setStatus('idle'),
+          toast({ title: 'Something went wrong', status: 'error' })
         )
-      : (toast({
-          title: 'You must provide a link to shorten',
-          status: 'warning',
-        }),
-        setStatus('idle'));
+      );
   };
 
   return (

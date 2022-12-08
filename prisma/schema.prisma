@@ -12,6 +12,5 @@ model ShortenedLink {
   link         String
   password     String?
   isSensitive  Boolean  @default(false)
-  userId       String?
   shortened_at DateTime @default(now())
 }
